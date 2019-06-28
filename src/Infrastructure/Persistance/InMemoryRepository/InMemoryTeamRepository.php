@@ -16,8 +16,9 @@ class InMemoryTeamRepository implements TeamRepository
         // TODO: Implement save() method.
     }
 
-    public function findAll(Team $team): array
+    public function findAll(): array
     {
+        array_push($this->teams, new Team('F.C. Barcelona', []));
         return $this->teams;
     }
 

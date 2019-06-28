@@ -4,6 +4,7 @@
 namespace App\Application;
 
 
+use App\Domain\team\Player;
 use App\Domain\team\TeamRepository;
 
 class AddPlayerToTeamService
@@ -15,7 +16,11 @@ class AddPlayerToTeamService
         $this->teamRepository = $teamRepository;
     }
 
-    public function execute(string $name) {
-        return $this->teamRepository->findByName($name);
+    public function execute(string $name, string $playerName): void {
+        $team = $this->teamRepository->findByName($name);
+        $player = new Player($playerName);
+        $team->addPlayer($player);
+
+        $this->teamRepository->save($team);
     }
 }

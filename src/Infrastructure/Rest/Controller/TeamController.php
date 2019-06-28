@@ -6,6 +6,7 @@ namespace App\Infrastructure\Rest\Controller;
 
 
 use App\Application\AddPlayerToTeamService;
+use App\Application\FindTeamsService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,11 +20,25 @@ class TeamController extends AbstractController
      * @param AddPlayerToTeamService $addPlayerToTeamService
      * @return Response
      */
-    public function addPlayerToTeam(AddPlayerToTeamService $addPlayerToTeamService) {
-        $team = $addPlayerToTeamService->execute('F.C. Barcelona');
+    public function addPlayerToTeam(AddPlayerToTeamService $addPlayerToTeamService) : Response {
+        $addPlayerToTeamService->execute('F.C. Barcelona', 'Messi');
 
-        return new JsonResponse(['name' => $team->getName(), "players" => $team->getPlayers()], 200);
-        //return new Response($team, 200);
+        return new Response(null,201);
+    }
+
+    /**
+     * @Route("/teams", name="find_teams", methods={"GET"})
+     * @param FindTeamsService $findTeamsService
+     * @return JsonResponse
+     */
+    public function findAllTeams(FindTeamsService $findTeamsService): JsonResponse {
+      /*  $encoders = [new JsonEncoder()];
+        $normalizers = [new ObjectNormalizer()];
+
+        $serializer = new Serializer($normalizers, $encoders);*/
+
+
+        return new JsonResponse($findTeamsService->execute(),200);
     }
 
 }
