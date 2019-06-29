@@ -29,9 +29,9 @@ class TeamController extends AbstractController
     /**
      * @Route("/teams", name="find_teams", methods={"GET"})
      * @param FindTeamsService $findTeamsService
-     * @return JsonResponse
+     * @return Response
      */
-    public function findAllTeams(FindTeamsService $findTeamsService): JsonResponse {
+    public function findAllTeams(FindTeamsService $findTeamsService): Response {
       /*  $encoders = [new JsonEncoder()];
         $normalizers = [new ObjectNormalizer()];
 
@@ -39,6 +39,7 @@ class TeamController extends AbstractController
 
 
         return new JsonResponse($findTeamsService->execute(),200);
+        return new Response(json_encode($findTeamsService->execute()), 200, array("Content-type" => "application/json"));
     }
 
 }
