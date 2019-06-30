@@ -5,8 +5,9 @@ namespace App\Infrastructure\Rest\Controller;
 
 
 
-use App\Application\AddPlayerToTeamService;
-use App\Application\FindTeamsService;
+
+use App\Application\Service\AddPlayerToTeamService;
+use App\Application\Service\FindTeamsService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;

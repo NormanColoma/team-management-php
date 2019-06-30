@@ -1,11 +1,11 @@
 <?php
 
 
-namespace App\Application;
+namespace App\Application\Service;
 
 
-use App\Domain\team\Player;
-use App\Domain\team\TeamRepository;
+use App\Domain\Team\Player;
+use App\Domain\Team\TeamRepository;
 
 class AddPlayerToTeamService
 {

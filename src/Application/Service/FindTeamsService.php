@@ -1,11 +1,13 @@
 <?php
 
 
-namespace App\Application;
+namespace App\Application\Service;
 
 
-use App\Application\transformers\team\TeamDataTransformer;
-use App\Domain\team\TeamRepository;
+
+
+use App\Application\Transformer\Team\TeamDataTransformer;
+use App\Domain\Team\TeamRepository;
 
 class FindTeamsService
 {
@@ -20,12 +22,8 @@ class FindTeamsService
 
     public function execute(): array {
         $teams = $this->teamRepository->findAll();
-        $teamsResponse = [];
-        foreach ($teams as $team) {
-            $this->teamDataTransformer->write($team);
-            array_push($teamsResponse, $this->teamDataTransformer->read());
-        }
-        return $teamsResponse;
+        $this->teamDataTransformer->write($teams);
+        return $this->teamDataTransformer->read();
     }
 
 }

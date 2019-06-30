@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Domain\team;
+namespace App\Domain\Team;
 
 
 interface TeamRepository

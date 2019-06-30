@@ -4,8 +4,8 @@
 namespace App\Infrastructure\Persistance\InMemoryRepository;
 
 
-use App\Domain\team\Team;
-use App\Domain\team\TeamRepository;
+use App\Domain\Team\Team;
+use App\Domain\Team\TeamRepository;
 
 class InMemoryTeamRepository implements TeamRepository
 {
