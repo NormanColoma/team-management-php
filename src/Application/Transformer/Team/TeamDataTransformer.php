@@ -4,8 +4,6 @@
 namespace App\Application\Transformer\Team;
 
 
-use App\Domain\Team\Team;
-
 interface TeamDataTransformer
 {
 

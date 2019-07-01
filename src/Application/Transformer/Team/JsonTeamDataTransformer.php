@@ -3,6 +3,7 @@
 
 namespace App\Application\Transformer\Team;
 
+use App\Domain\Team\Player;
 use App\Domain\Team\Team;
 
 class JsonTeamDataTransformer implements TeamDataTransformer
@@ -28,7 +29,13 @@ class JsonTeamDataTransformer implements TeamDataTransformer
     private function teamAsJson(Team $team) {
         return array(
             'name' => $team->getName(),
-            'players' => $team->getPlayers()
+            'players' => array_map(function ($player) { return $this->playerAsJson($player); }, $team->getPlayers())
+        );
+    }
+
+    private function playerAsJson(Player $player) {
+        return array(
+            'name' => $player->getName()
         );
     }
 }

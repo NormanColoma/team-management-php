@@ -9,11 +9,13 @@ const MAX_PLAYERS = 20;
 
 class Team
 {
+    private $id;
     private $name;
     private $players;
 
     public function __construct(string $name, array $players)
     {
+        $this->generateId();
         $this->setName($name);
         $this->setPlayers($players);
     }
@@ -27,6 +29,18 @@ class Team
         array_push($this->players, $player);
     }
 
+
+    public function generateId() {
+        $this->id = random_int(1, 99999);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 
     /**
      * @return mixed

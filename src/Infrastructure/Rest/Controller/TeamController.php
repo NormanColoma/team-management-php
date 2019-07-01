@@ -7,7 +7,9 @@ namespace App\Infrastructure\Rest\Controller;
 
 
 use App\Application\Service\AddPlayerToTeamService;
+use App\Application\Service\AddTeam;
 use App\Application\Service\FindTeamsService;
+use App\Domain\Team\Team;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,9 +24,14 @@ class TeamController extends AbstractController
      * @return Response
      */
     public function addPlayerToTeam(AddPlayerToTeamService $addPlayerToTeamService) : Response {
-        $addPlayerToTeamService->execute('F.C. Barcelona', 'Messi');
+        try {
+            $addPlayerToTeamService->execute(15036, 'Messi');
 
-        return new Response(null,201);
+            return new Response(null,201);
+        } catch (\Exception $ex) {
+            return $this->errorResponse($ex);
+        }
+
     }
 
     /**
@@ -33,7 +40,23 @@ class TeamController extends AbstractController
      * @return Response
      */
     public function findAllTeams(FindTeamsService $findTeamsService): Response {
-        return new JsonResponse($findTeamsService->execute(),200);
+        return new JsonResponse($findTeamsService->execute(),Response::HTTP_OK);
+    }
+
+    /**
+     * @Route("/teams/new", name="add_team", methods={"POST"})
+     * @param AddTeam $addTeam
+     * @return Response
+     */
+    public function addTeam(AddTeam $addTeam) : Response {
+        $team = new Team('F.C. Barcelona', []);
+        $addTeam->execute($team);
+
+        return new Response(null,Response::HTTP_CREATED);
+    }
+
+    private function errorResponse(\Exception $ex) : Response {
+        return new ErrorResponse($ex->getMessage());
     }
 
 }
