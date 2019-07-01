@@ -13,7 +13,7 @@ class Team
     private $name;
     private $players;
 
-    public function __construct(string $name, array $players)
+    public function __construct(string $name, array $players = [])
     {
         $this->generateId();
         $this->setName($name);

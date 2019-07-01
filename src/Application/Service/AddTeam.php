@@ -6,7 +6,6 @@ namespace App\Application\Service;
 
 use App\Domain\Team\Team;
 use App\Domain\Team\TeamRepository;
-use Exception;
 
 class AddTeam
 {
@@ -17,8 +16,9 @@ class AddTeam
         $this->teamRepository = $teamRepository;
     }
 
-    public function execute(Team $team) {
-        $this->teamRepository->save($team);
+    public function execute(AddTeamRequest $request) {
+
+        $this->teamRepository->save(new Team($request->getName()));
     }
 
 }

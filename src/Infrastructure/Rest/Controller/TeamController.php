@@ -8,10 +8,11 @@ namespace App\Infrastructure\Rest\Controller;
 
 use App\Application\Service\AddPlayerToTeamService;
 use App\Application\Service\AddTeam;
+use App\Application\Service\AddTeamRequest;
 use App\Application\Service\FindTeamsService;
-use App\Domain\Team\Team;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -45,12 +46,13 @@ class TeamController extends AbstractController
 
     /**
      * @Route("/teams/new", name="add_team", methods={"POST"})
+     * @param Request $request
      * @param AddTeam $addTeam
      * @return Response
      */
-    public function addTeam(AddTeam $addTeam) : Response {
-        $team = new Team('F.C. Barcelona', []);
-        $addTeam->execute($team);
+    public function addTeam(Request $request, AddTeam $addTeam) : Response {
+        $incomingData = json_decode($request->getContent(), true);
+        $addTeam->execute(new AddTeamRequest($incomingData['name']));
 
         return new Response(null,Response::HTTP_CREATED);
     }
