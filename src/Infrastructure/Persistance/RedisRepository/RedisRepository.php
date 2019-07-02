@@ -30,7 +30,7 @@ class RedisRepository implements TeamRepository
         }, $teams);
     }
 
-    public function findById(int $id)
+    public function findById(int $id): ?Team
     {
         $teamFound = $this->client->hGet('teams', 'asdfasdf');
         return is_null($teamFound) ? null : unserialize($teamFound);

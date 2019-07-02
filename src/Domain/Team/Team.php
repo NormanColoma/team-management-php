@@ -4,8 +4,8 @@
 namespace App\Domain\Team;
 
 
+use App\Domain\Team\Exception\TeamCannotHoldMorePlayersException;
 use App\Domain\Team\Exception\TeamWithNoValidNameException;
-use Exception;
 const MAX_PLAYERS = 20;
 
 class Team
@@ -23,7 +23,7 @@ class Team
 
     public function addPlayer(Player $player) {
         if ($this->totalPlayers() >= MAX_PLAYERS) {
-            throw new Exception("Team cannot have more players");
+            throw new TeamCannotHoldMorePlayersException("Team cannot have more players");
         }
 
         array_push($this->players, $player);
@@ -77,7 +77,7 @@ class Team
         $this->players = $players;
     }
 
-    public function totalPlayers() {
+    private function totalPlayers() {
         return sizeof($this->players);
     }
 
