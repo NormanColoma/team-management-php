@@ -35,4 +35,9 @@ class RedisRepository implements TeamRepository
         $teamFound = $this->client->hGet('teams', 'asdfasdf');
         return is_null($teamFound) ? null : unserialize($teamFound);
     }
+
+    public function generateNextId(): int
+    {
+        return random_int(1, 99999);
+    }
 }

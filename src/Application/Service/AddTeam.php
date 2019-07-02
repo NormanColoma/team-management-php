@@ -17,8 +17,10 @@ class AddTeam
     }
 
     public function execute(AddTeamRequest $request) {
+        $team = new Team($request->getName());
+        $team->setId($this->teamRepository->generateNextId());
 
-        $this->teamRepository->save(new Team($request->getName()));
+        $this->teamRepository->save($team);
     }
 
 }

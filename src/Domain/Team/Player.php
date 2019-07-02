@@ -4,6 +4,8 @@
 namespace App\Domain\Team;
 
 
+use App\Domain\Team\Exception\PlayerWithNoValidNameException;
+
 class Player
 {
     private $name;
@@ -15,9 +17,13 @@ class Player
 
     /**
      * @param mixed $name
+     * @throws PlayerWithNoValidNameException
      */
     public function setName($name): void
     {
+        if(empty($name) || is_null($name)) {
+            throw new PlayerWithNoValidNameException("Name of the player is not a valid name");
+        }
         $this->name = $name;
     }
 

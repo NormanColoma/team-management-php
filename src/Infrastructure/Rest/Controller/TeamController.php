@@ -10,6 +10,7 @@ use App\Application\Service\AddPlayerToTeamService;
 use App\Application\Service\AddTeam;
 use App\Application\Service\AddTeamRequest;
 use App\Application\Service\FindTeamsService;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -29,7 +30,7 @@ class TeamController extends AbstractController
             $addPlayerToTeamService->execute(15036, 'Messi');
 
             return new Response(null,201);
-        } catch (\Exception $ex) {
+        } catch (Exception $ex) {
             return $this->errorResponse($ex);
         }
 
@@ -52,12 +53,17 @@ class TeamController extends AbstractController
      */
     public function addTeam(Request $request, AddTeam $addTeam) : Response {
         $incomingData = json_decode($request->getContent(), true);
-        $addTeam->execute(new AddTeamRequest($incomingData['name']));
+
+        try {
+            $addTeam->execute(new AddTeamRequest($incomingData['name']));
+        } catch(Exception $ex) {
+            return $this->errorResponse($ex);
+        }
 
         return new Response(null,Response::HTTP_CREATED);
     }
 
-    private function errorResponse(\Exception $ex) : Response {
+    private function errorResponse(Exception $ex) : Response {
         return new ErrorResponse($ex->getMessage());
     }
 

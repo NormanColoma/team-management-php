@@ -4,6 +4,7 @@
 namespace App\Domain\Team;
 
 
+use App\Domain\Team\Exception\TeamWithNoValidNameException;
 use Exception;
 const MAX_PLAYERS = 20;
 
@@ -15,7 +16,6 @@ class Team
 
     public function __construct(string $name, array $players = [])
     {
-        $this->generateId();
         $this->setName($name);
         $this->setPlayers($players);
     }
@@ -29,9 +29,8 @@ class Team
         array_push($this->players, $player);
     }
 
-
-    public function generateId() {
-        $this->id = random_int(1, 99999);
+    public function setId(int $id) {
+        $this->id = $id;
     }
 
     /**
@@ -60,9 +59,13 @@ class Team
 
     /**
      * @param mixed $name
+     * @throws TeamWithNoValidNameException
      */
     public function setName($name): void
     {
+        if(empty($name) || is_null($name)) {
+            throw new TeamWithNoValidNameException("Name of the team is not a valid name");
+        }
         $this->name = $name;
     }
 
