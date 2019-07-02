@@ -18,6 +18,11 @@ services:
         exclude: '../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
         shared: true
 
+    App\Infrastructure\Persistance\RedisRepository\RedisClient:
+        arguments:
+            $connection_url: '%env(REDIS_URL)%'
+
+
     # controllers are imported separately to make sure services can be injected
     # as action arguments even if you don't extend any base controller class
     App\Infrastructure\Rest\Controller\:

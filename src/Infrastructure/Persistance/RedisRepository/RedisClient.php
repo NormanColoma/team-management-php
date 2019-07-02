@@ -9,10 +9,12 @@ use Symfony\Component\Cache\Adapter\RedisAdapter;
 class RedisClient
 {
     private $client;
+    private $connection_url;
 
-    public function __construct()
+    public function __construct($connection_url)
     {
-        $this->client = RedisAdapter::createConnection('redis://localhost:6379');
+        $this->connection_url=$connection_url;
+        $this->client = RedisAdapter::createConnection($this->connection_url);
     }
 
     public function client() {
