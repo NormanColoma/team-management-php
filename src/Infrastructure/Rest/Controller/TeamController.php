@@ -42,7 +42,7 @@ class TeamController extends AbstractController
      * @return Response
      */
     public function findAllTeams(FindTeamsService $findTeamsService): Response {
-        return new JsonResponse($findTeamsService->execute(),Response::HTTP_OK);
+        return new JsonResponse($findTeamsService->execute(),Response::HTTP_OK, ['Access-Control-Allow-Origin' => '*']);
     }
 
     /**
